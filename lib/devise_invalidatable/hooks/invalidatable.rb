@@ -15,6 +15,7 @@ end
 Warden::Manager.after_fetch do |user, warden, _|
   unless user.session_active?(warden.raw_session['auth_id'])
     warden.logout
+    redirect_to root_url, notice: 'Logged out. Exceeded maximum 2 device limit.'
     throw :warden, message: :unauthenticated
   end
 end
